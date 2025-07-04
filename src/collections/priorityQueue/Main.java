@@ -1,11 +1,21 @@
 package collections.priorityQueue;
 
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.PriorityBlockingQueue;
 
+/*
+ВАЖЛИВО:
+- PriorityBlockingQueue — це неблокуюча потокобезпечна черга з пріоритетом.
+- Елементи дістаються з черги у відповідності до їх природного порядку
+  (Comparable) або за допомогою Comparator, якщо він заданий.
+- У цьому прикладі — це Integer, тож елементи будуть видаватись за зростанням.
+- Метод put() додає елемент у чергу, take() дістає і видаляє найбільш пріоритетний елемент,
+  блокуючись, якщо черга порожня.
+- Важливо: черга не гарантує порядок вставки, лише порядок пріоритету.
+*/
+
 class FirstWorker implements Runnable {
-  BlockingQueue<Integer> queue; 
+  BlockingQueue<Integer> queue;
 
   public FirstWorker(BlockingQueue<Integer> queue) {
     this.queue = queue;
@@ -35,7 +45,7 @@ class SecondWorker implements Runnable {
   public void run() {
     while (true) {
       try {
-        // should print elements in order to comparable results
+        // Елементи виводяться у порядку зростання: 2, 5, 10, 100
         System.out.println("Consuming... counter: " + queue.take());
         Thread.sleep(100);
       } catch (InterruptedException e) {

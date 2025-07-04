@@ -4,8 +4,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/*
+ВАЖЛИВО:
+- Collections.synchronizedList() повертає потокобезпечний обгорток для List.
+- Усі методи колекції синхронізовані на внутрішньому моніторі.
+- Важливо: при ітерації по такому списку треба додатково синхронізуватись,
+  інакше можливі ConcurrentModificationException.
+- У цьому прикладі два потоки паралельно додають елементи у список.
+- Завдяки synchronizedList, модифікації відбуваються без втрати даних.
+*/
+
 public class Main {
     public static void main(String[] args) {
+        // Отримуємо потокобезпечний список
         List<Integer> list = Collections.synchronizedList(new ArrayList<>());
 
         Thread t1 = new Thread(() -> {
@@ -29,6 +40,6 @@ public class Main {
             throw new RuntimeException(e);
         }
 
-        System.out.println("Size: " + list.size());
+        System.out.println("Size: " + list.size()); // Очікуємо 2000
     }
 }

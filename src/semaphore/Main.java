@@ -1,13 +1,24 @@
 package semaphore;
 
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
+
+/*
+Пояснення та поради:
+- Semaphore — механізм контролю кількості потоків, які можуть одночасно
+  отримати дозвіл (permit) на виконання певної частини коду.
+- У цьому прикладі Semaphore з 3 пермітами означає, що одночасно максимум
+  3 потоки можуть працювати у методі download().
+- Метод acquire() блокує потік, якщо всі перміти зайняті, доки один не звільниться.
+- Метод release() звільняє перміт, даючи змогу іншому потоку увійти.
+- Другий параметр конструктора (true) встановлює справедливий порядок
+  надання пермітів (FIFO).
+- Завжди виконуй release() у finally-блоці, щоб уникнути блокування.
+- Для неблокуючої перевірки можна використати tryAcquire() із таймаутом.
+*/
 
 enum Downloader {
     INSTANCE;
 
-    // Semaphore видає перміти на одночасне виконнаня різними потоками
     private final Semaphore semaphore = new Semaphore(3, true);
 
     public void download() {
@@ -23,23 +34,18 @@ enum Downloader {
 
     private void downloadData() {
         try {
-            System.out.println("Downloading...");
+            System.out.println("Downloading... Thread: " + Thread.currentThread().getName());
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
 }
+
 public class Main {
     public static void main(String[] args) {
-//        Executor executor = Executors.newCachedThreadPool();
-//
-//        for (int i = 0; i < 12; i++) {
-//            executor.execute(Downloader.INSTANCE::download);
-//        }
         for (int i = 0; i < 12; i++) {
-            new Thread(Downloader.INSTANCE::download).start();
+            new Thread(Downloader.INSTANCE::download, "Downloader-" + i).start();
         }
-
     }
 }
