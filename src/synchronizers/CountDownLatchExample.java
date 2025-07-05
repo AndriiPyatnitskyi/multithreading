@@ -1,4 +1,4 @@
-package collections.latch;
+package synchronizers;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -37,7 +37,7 @@ class Worker implements Runnable{
     }
 }
 
-public class Main {
+public class CountDownLatchExample {
 
     public static void main(String[] args) {
         CountDownLatch countDownLatch = new CountDownLatch(5);

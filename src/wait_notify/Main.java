@@ -1,6 +1,6 @@
 package wait_notify;
 
-class Process {
+class Processor {
 
     /**
      * Метод produce() блокує монітор this, виводить повідомлення і викликає wait(),
@@ -68,12 +68,12 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Process process = new Process();
+        Processor processor = new Processor();
 
         // Потік, який виконує produce() — викликає wait()
         Thread t1 = new Thread(() -> {
             try {
-                process.produce();
+                processor.produce();
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -82,7 +82,7 @@ public class Main {
         // Потік, який виконує consume() — викликає notify()
         Thread t2 = new Thread(() -> {
             try {
-                process.consume();
+                processor.consume();
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

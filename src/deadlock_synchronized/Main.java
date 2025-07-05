@@ -1,4 +1,4 @@
-package deadlock_synchronyzed;
+package deadlock_synchronized;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;

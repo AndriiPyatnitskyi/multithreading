@@ -17,7 +17,7 @@ import java.util.List;
 - Для більш надійної реалізації використовують цикл while для перевірки
   умови, оскільки notify може пробудити потік "помилково" (spurious wakeup).
 
-- Для масштабованіших рішень радять використовувати BlockingQueue або
+- Для більш масштабних рішень радять використовувати BlockingQueue або
   ReentrantLock з Condition, які дають більший контроль і простіші у використанні.
 */
 class Processor {
@@ -31,7 +31,8 @@ class Processor {
     // Обʼєкт монітора для синхронізації wait/notify
     private final Object lock = new Object();
 
-    private int value = 0; // Значення, яке виробник додає в список
+    // Значення, яке виробник додає в список
+    private int value = 0;
 
     /**
      * Метод виробника (producer):

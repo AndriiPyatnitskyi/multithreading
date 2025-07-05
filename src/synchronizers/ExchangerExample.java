@@ -1,4 +1,4 @@
-package collections.exchanger;
+package synchronizers;
 
 import static java.util.concurrent.CompletableFuture.runAsync;
 import java.util.concurrent.CompletableFuture;
@@ -12,7 +12,7 @@ import java.util.concurrent.Exchanger;
 - Дуже корисний для задач, де два потоки працюють парно та мають обмінюватись даними.
 */
 
-public class Main {
+public class ExchangerExample {
   public static void main(String[] args) {
     Exchanger<String> exchanger = new Exchanger<>();
 

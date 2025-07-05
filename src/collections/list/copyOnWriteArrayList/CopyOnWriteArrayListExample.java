@@ -1,4 +1,4 @@
-package collections.copyOnWriteArrayList;
+package collections.list.copyOnWriteArrayList;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -10,12 +10,21 @@ import java.util.concurrent.CopyOnWriteArrayList;
 - CopyOnWriteArrayList — потокобезпечна реалізація List.
 - При кожній операції модифікації (add, remove і т.д.) створюється нова копія внутрішнього масиву.
 - Ітератори, створені до модифікації, працюють з "старою" незмінною версією списку.
-- Це забезпечує безпечну ітерування без ConcurrentModificationException,
+- Це забезпечує безпечне ітерування без ConcurrentModificationException,
   але робить модифікації дорогими по ресурсах.
 - Підходить для списків з частими операціями читання та рідкими модифікаціями.
+
+Плюси:
+Безпечна ітерація без блокувань: Ітератори працюють над «знімком» списку, тому можна ітерувати без додаткової синхронізації.
+Ідеально підходить для сценаріїв "багато читачів — мало писарів": Операції читання не блокуються і дуже швидкі.
+Уникає ConcurrentModificationException: Оновлення створюють новий масив, тому ітерація не впливає на поточні читачі.
+
+Мінуси:
+Висока вартість запису: Кожна операція додавання або видалення створює копію внутрішнього масиву — це дорого з точки зору пам’яті і CPU.
+Не підходить для частих змін: Якщо у вас багато змін у списку, це може суттєво погіршити продуктивність.
 */
 
-public class Main {
+public class CopyOnWriteArrayListExample {
   public static void main(String[] args) {
     CopyOnWriteArrayList<Integer> numbers = new CopyOnWriteArrayList<>(new Integer[]{1, 3, 5, 8});
 

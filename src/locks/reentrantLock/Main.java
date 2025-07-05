@@ -1,4 +1,4 @@
-package reentrant_lock_condition;
+package locks.reentrantLock;
 
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -7,17 +7,17 @@ import java.util.concurrent.locks.ReentrantLock;
 /*
 ВАЖЛИВО:
 - ReentrantLock — це альтернатива synchronized, яка дає більше контролю над блокуванням.
-- Condition пов’язаний з Lock і дозволяє потокам чекати і сигналити (await/signal),
+- Condition пов’язаний з Lock і дозволяє потокам чекати та сигналити (await/signal),
   схоже на wait/notify, але з більшою гнучкістю.
 - Перед викликом await() треба обов’язково захопити lock.lock().
-- await() — поток віддає блокування і переходить у режим очікування сигналу.
+- await() — потік віддає блокування і переходить у режим очікування сигналу.
 - signal() — пробуджує один потік, який чекає на цьому Condition.
 - Після signal() пробуджений потік знову має зачекати, доки lock буде звільнений.
 - Важливо викликати lock.unlock() у finally блоці або після завершення роботи,
   щоб не створити deadlock.
 */
 
-class Process {
+class Processor {
     private final Lock lock = new ReentrantLock();
     private final Condition condition = lock.newCondition();
 
@@ -49,11 +49,11 @@ class Process {
 public class Main {
 
     public static void main(String[] args) {
-        Process process = new Process();
+        Processor processor = new Processor();
 
         Thread t1 = new Thread(() -> {
             try {
-                process.produce();
+                processor.produce();
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -63,7 +63,7 @@ public class Main {
 
         Thread t2 = new Thread(() -> {
             try {
-                process.consume();
+                processor.consume();
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

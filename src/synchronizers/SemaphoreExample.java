@@ -1,4 +1,4 @@
-package semaphore;
+package synchronizers;
 
 import java.util.concurrent.Semaphore;
 
@@ -42,7 +42,7 @@ enum Downloader {
     }
 }
 
-public class Main {
+public class SemaphoreExample {
     public static void main(String[] args) {
         for (int i = 0; i < 12; i++) {
             new Thread(Downloader.INSTANCE::download, "Downloader-" + i).start();

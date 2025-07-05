@@ -1,4 +1,4 @@
-package collections.cyclicBarrier;
+package synchronizers;
 
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
@@ -17,12 +17,12 @@ import java.util.concurrent.Executors;
   якщо один із потоків був перерваний).
 */
 
-class Worker implements Runnable {
+class CyclicBarrierWorker implements Runnable {
 
   CyclicBarrier cyclicBarrier;
   int id;
 
-  public Worker(CyclicBarrier cyclicBarrier, int id) {
+  public CyclicBarrierWorker(CyclicBarrier cyclicBarrier, int id) {
     this.cyclicBarrier = cyclicBarrier;
     this.id = id;
   }
@@ -44,7 +44,7 @@ class Worker implements Runnable {
   }
 }
 
-public class Main {
+public class CyclicBarrierExample {
 
   public static void main(String[] args) {
     ExecutorService executorService = Executors.newFixedThreadPool(5);
@@ -62,7 +62,7 @@ public class Main {
 
     // Запускаємо 5 потоків, які працюють і чекають на барʼєрі
     for (int i = 0; i < 5; i++) {
-      executorService.execute(new Worker(cyclicBarrier, i));
+      executorService.execute(new CyclicBarrierWorker(cyclicBarrier, i));
     }
 
     executorService.shutdown();

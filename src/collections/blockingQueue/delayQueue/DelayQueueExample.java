@@ -1,4 +1,4 @@
-package collections.delayQueue;
+package collections.blockingQueue.delayQueue;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.DelayQueue;
@@ -25,21 +25,6 @@ class DelayedWorker implements Delayed {
         this.message = message;
     }
 
-    public long getDuration() {
-        return duration;
-    }
-
-    public void setDuration(long duration) {
-        this.duration = duration;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
 
     @Override
     public long getDelay(TimeUnit unit) {
@@ -61,7 +46,7 @@ class DelayedWorker implements Delayed {
     }
 }
 
-public class Main {
+public class DelayQueueExample {
 
     public static void main(String[] args) {
         BlockingQueue<DelayedWorker> queue = new DelayQueue<>();
